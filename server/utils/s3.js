@@ -14,6 +14,8 @@ const s3 = new S3({
   secretKey,
 });
 
+// uploads file, returns promise that will resolve into the string we use
+// for the file key
 function uploadFile(file) {
   console.log("Trying to upload...");
   let fileStream = fs.createReadStream(file.path);
@@ -27,6 +29,8 @@ function uploadFile(file) {
   return s3.upload(uploadParams).promise();
 }
 
+// gets file from the bucket using the fileKey and returns
+// the data stream. This is used for displaying photos
 function getFile(fileKey) {
   const downloadParams = {
     Bucket: bucket,
@@ -37,9 +41,24 @@ function getFile(fileKey) {
   return fileStream;
 }
 
-function downloadFile(fileKey) {
-  let fileStream = getFile(fileKey);
-  return fileStream;
+function downloadFile(fileKey, fileExtension, fileName) {
+  const downloadParams = {
+    Bucket: bucket,
+    Key: fileKey,
+  };
+  s3.getObject(downloadParams, (err, res) => {
+    if (err === null) {
+      // these return variables then need to be sent back in this fashion:
+      // res.attachment([nameofreturnvar].attachment)
+      // res.send([nameofreturnvar].body)
+      return {
+        attachment: fileName.concat(fileExtension),
+        body: data.body,
+      };
+    } else {
+      return err;
+    }
+  });
 }
 
 module.exports = {
