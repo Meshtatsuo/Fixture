@@ -1,5 +1,6 @@
 const { Schema, model } = require('mongoose');
 const bcrypt = require('bcrypt');
+const productSchema = require('./Product');
 
 const userSchema = new Schema(
     {
@@ -28,7 +29,7 @@ const userSchema = new Schema(
                 ref: 'Product'
             }
         ],
-        purchasedItems: [productSchema]
+        //purchasedItems: [productSchema]
 
     }
     // may be adding virtuals for additional fields
