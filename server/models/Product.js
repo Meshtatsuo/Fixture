@@ -18,7 +18,7 @@ const productSchema = new Schema(
             maxlength: 500
         },
         price: {
-            type: Number,
+            type: Float,
             required: true
         },
         //additional code needed here for AWS
@@ -30,7 +30,7 @@ const productSchema = new Schema(
             type: String
         },
         //additional code needed here for AWS
-        fileExtension: {
+        fileName: {
             type: String
         },
         createdAt: {
@@ -38,7 +38,7 @@ const productSchema = new Schema(
             default: Date.now,
             //   get: timestamp => dateFormat(timestamp)
         }
-    },
+    }
     // may be adding virtuals for additional fields
     // ,
     // {

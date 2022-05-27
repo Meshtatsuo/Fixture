@@ -21,14 +21,14 @@ const userSchema = new Schema(
             minlength: 8
         },
         //check this
-        purchasedItems: [
+        product: [
             // I'm not sure if this wil return purchased items or just the items listed by the user
             {
                 type: Schema.Types.ObjectId,
                 ref: 'Product'
             }
         ],
-        product: [productSchema]
+        purchasedItems: [productSchema]
 
     }
     // may be adding virtuals for additional fields
