@@ -41,7 +41,7 @@ function getFile(fileKey) {
   return fileStream;
 }
 
-function downloadFile(fileKey, fileExtension, fileName) {
+function downloadFile(fileKey, fileName) {
   const downloadParams = {
     Bucket: bucket,
     Key: fileKey,
@@ -52,7 +52,7 @@ function downloadFile(fileKey, fileExtension, fileName) {
       // res.attachment([nameofreturnvar].attachment)
       // res.send([nameofreturnvar].body)
       return {
-        attachment: fileName.concat(fileExtension),
+        attachment: fileName,
         body: data.body,
       };
     } else {
