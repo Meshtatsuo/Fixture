@@ -1,0 +1,21 @@
+{
+  "name": "fixture",
+  "version": "1.0.0",
+  "description": "An Ecommerce platform for users to sell digital goods!",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Meshtatsuo/Fixture.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Meshtatsuo/Fixture/issues"
+  },
+  "homepage": "https://github.com/Meshtatsuo/Fixture#readme",
+  "devDependencies": {}
+}
