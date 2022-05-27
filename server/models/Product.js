@@ -18,8 +18,9 @@ const productSchema = new Schema(
             maxlength: 500
         },
         price: {
-            type: Float,
-            required: true
+            type: Number,
+            required: true,
+            min: 0.99
         },
         //additional code needed here for AWS
         thumbnailKey: {

@@ -9,10 +9,8 @@ const typeDefs = gql`
     price: Float
     thumbnailKey: String
     fileKey: String
-    fileExtension: String
+    fileName: String
     createdAt: String
-    numberSold: Int
-    lastSold: String
   }
 
   type Order {
@@ -39,19 +37,19 @@ const typeDefs = gql`
   }
 
 type Query {
-  products(category: ID, name: String): [Product]
   product(_id: ID!): Product
+  products(_id: ID): [Product]
   user: User
   order(_id: ID!): Order
   checkout(products: [ID]!): Checkout
 }
 
   type Mutation {
-    addUser(username: String!, email: String!, password: String!): Auth
+    addUser(username: String!, email: String!, password: String!): User
     addOrder(products: [ID]!): Order
-    updateUser(firstName: String, lastName: String, email: String, password: String): User
+    updateUser(username: String, email: String, password: String): User
     updateProduct(_id: ID!, quantity: Int!): Product
-    login(email: String!, password: String!): Auth
+    login(email: String!, password: String!): User
   }
 `;
 
