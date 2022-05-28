@@ -4,7 +4,3 @@ export function getFileExtension(fileName) {
     (Math.max(0, fileName.lastIndexOf(".")) || Infinity) + 1
   );
 }
-
-export function getFileName(str) {
-  return str.replace(/^.*(\\|\/|\:)/, "");
-}
