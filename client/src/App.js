@@ -1,31 +1,73 @@
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import {
+  ApolloClient,
+  InMemoryCache,
+  ApolloProvider,
+  createHttpLink,
+} from "@apollo/client";
+import { setContext } from "@apollo/client/link/context";
+
+// Import pages
+import Browse from "./pages/Browse";
+import Cart from "./pages/Cart";
+import Landing from "./pages/Landing";
+import Login from "./pages/Login";
+import NewProduct from "./pages/NewProduct";
+import Profile from "./pages/Profile";
+import Signup from "./pages/Signup";
+import ViewProduct from "./pages/ViewProduct";
+
+// Import components
+import Nav from "./components/Nav";
+
+// import global state
+import { StoreProvider } from "./utils/GlobalState";
+
+// import stylesheet
 import "./index.css";
+
+const httpLink = createHttpLink({
+  uri: "/graphql",
+});
+
+// Initialize JWT link
+const authLink = setContext((_, { headers }) => {
+  const token = localStorage.getItem("id_token");
+  return {
+    headers: {
+      ...headers,
+      authorization: token ? `Bearer ${token}` : "",
+    },
+  };
+});
+
+// set up Apollo Client
+const client = new ApolloClient({
+  link: authLink.concat(httpLink),
+  cache: new InMemoryCache(),
+});
 
 function App() {
   return (
-    <div className="App">
-      <div class="rounded-lg overflow-hidden mx-auto max-w-sm bg-white shadow text-center">
-        <div class="bg-blue-800 py-1">
-          <p class="text-white font-bold text-2xl">2 GB</p>
+    <ApolloProvider client={client}>
+      <Router>
+        <div>
+          <StoreProvider>
+            <Nav />
+            <Routes>
+              <Route path="/" element={<Landing />} />
+              <Route path="/login" element={<Login />} />
+              <Route path="/signup" element={<Signup />} />
+              <Route path="/browse" element={<Browse />} />
+              <Route path="new-product" element={<NewProduct />} />
+              <Route path="profile" element={<Profile />} />
+              <Route path="viewProduct" element={<ViewProduct />} />
+              <Route path="cart" element={<Cart />} />
+            </Routes>
+          </StoreProvider>
         </div>
-
-        <div class="py-4">
-          <div class="flex justify-center">
-            <span class="text-3xl self-start font-thin">$</span>
-            <span class="text-7xl font-semibold">9</span>
-            <span class="text-3xl self-end font-thin">/mo</span>
-          </div>
-
-          <p class="mt-1 text-sm">$10 activation fee</p>
-
-          <a
-            class="inline-block mt-4 bg-blue-800 text-white py-1 px-4 rounded-full font-semibold"
-            href="#"
-          >
-            View Plan
-          </a>
-        </div>
-      </div>
-    </div>
+      </Router>
+    </ApolloProvider>
   );
 }
 
