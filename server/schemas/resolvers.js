@@ -10,39 +10,28 @@ const {
 } = require('../utils/auth');
 const stripe = require('stripe')('sk_test_4eC39HqLyjWDarjtT1zdp7dc');
 
-// TODO: These need to be updated & tested
-
 const resolvers = {
   Query: {
-    products: async (parent, {
-      category,
-      name
-    }) => {
-      const params = {};
-
-      if (category) {
-        params.category = category;
-      }
-
-      if (name) {
-        params.name = {
-          $regex: name
-        };
-      }
-
-      return await Product.find(params);
-    },
     product: async (parent, {
       _id
     }) => {
       return await Product.findById(_id);
     },
-    user: async (parent, { username }) => {
-      return User.findOne({ username })
-        .select('-__v -password')
-        .populate('products')
+    user: async (parent, args, context) => {
+      if (context.user) {
+        const user = await User.findById(context.user._id).populate({
+          path: 'orders.products',
+          populate: 'products'
+        });
+
+        user.orders.sort((a, b) => b.purchaseDate - a.purchaseDate);
+
+        return user;
+      }
+
+      throw new AuthenticationError('Not logged in');
     },
-      me: async (parent, args, context) => {
+    me: async (parent, args, context) => {
         if (context.user) {
           const userData = await User.findOne({ _id: context.user._id })
             .select('-__v -password')
@@ -52,13 +41,19 @@ const resolvers = {
         }
       
         throw new AuthenticationError('Not logged in');
-      },
+    },
+    users: async () => {
+      return User.find()
+        .select('-__v -password')
+        .populate('products')
+    },
     order: async (parent, {
       _id
     }, context) => {
       if (context.user) {
         const user = await User.findById(context.user._id).populate({
-          path: 'orders.products'
+          path: 'orders.products',
+          populate: 'products'
         });
 
         return user.orders.id(_id);
@@ -66,7 +61,6 @@ const resolvers = {
 
       throw new AuthenticationError('Not logged in');
     },
-
     checkout: async (parent, args, context) => {
       const order = new Order({
         products: args.products
@@ -82,8 +76,8 @@ const resolvers = {
         // generate product id
         const product = await stripe.products.create({
           name: products[i].name,
-          description: products[i].description,
-          images: [`${url}/images/${products[i].image}`]
+          description: products[i].description
+          //add image here thumbnailKey: [`${url}/images/${products[i].image}`]
         });
 
         // generate price id using the product id
@@ -111,10 +105,13 @@ const resolvers = {
       return {
         session: session.id
       };
-
-
-    }
-
+    },
+    //not sure if this would actually show all products or only those tied to a user
+    products: async () => {
+      return User.find()
+        .select('-__v -password')
+        .populate('products')
+    },
   },
   Mutation: {
     addUser: async (parent, args) => {
@@ -154,7 +151,7 @@ const resolvers = {
       }
 
       throw new AuthenticationError('Not logged in');
-    },
+    }, 
     updateProduct: async (parent, {
       _id,
       quantity
@@ -168,6 +165,50 @@ const resolvers = {
       }, {
         new: true
       });
+    },
+    addProduct: async (parent, { product }, context) => {
+      if (context.user) {
+        const product = await Product.create({ ...args, username: context.user.username });
+    
+        await User.findByIdAndUpdate(
+          { _id: context.user._id },
+          { $push: { products: product } },
+          { new: true }
+        );
+    
+        return product;
+      }
+    
+      throw new AuthenticationError('You need to be logged in!');
+    },
+    //may not need this?
+    saveProduct: async (parent, { product }, context) => {
+      if (context.user) {
+        const updatedUser =
+        await User.findByIdAndUpdate(
+          { _id: context.user._id },
+          { $push: { products: product } },
+          { new: true }
+        );
+    
+        return updatedUser;
+      }
+    
+      throw new AuthenticationError('You need to be logged in!');
+    },
+    removeProduct: async (parent, args, context) => {
+      if (context.user) {
+        const updatedUser =
+        await User.findByIdAndUpdate(
+          { _id: context.user._id },
+          { $pull: { products: product._id } },
+          { new: true }
+        );
+    
+        return updatedUser;
+      }
+    
+      throw new AuthenticationError('You need to be logged in!');
     },
     login: async (parent, {
       email,
