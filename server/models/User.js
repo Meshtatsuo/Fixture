@@ -21,6 +21,7 @@ const userSchema = new Schema(
             required: true,
             minlength: 8
         },
+        orders: [Order.schema],
         //check this
         product: [
             // I'm not sure if this wil return purchased items or just the items listed by the user
