@@ -3,6 +3,9 @@ const { User, Product } = require("../models");
 const { signToken } = require("../utils/auth");
 const stripe = require("stripe")("sk_test_4eC39HqLyjWDarjtT1zdp7dc");
 
+// AWS functionality
+const { uploadFile, getFile, downloadFile } = require("../utils/s3.js");
+
 const resolvers = {
   Query: {
     product: async (parent, { _id }) => {
@@ -149,8 +152,9 @@ const resolvers = {
       );
     },
     addProduct: async (parent, { product }, context) => {
-      console.log(product);
-      return true;
+      console.log("Hey you got here");
+      console.log(JSON.parse(product.fileKey));
+
       /* Will refactor this once I get this resolver working
       if (context.user) {
         const product = await Product.create({ ...args, username: context.user.username });

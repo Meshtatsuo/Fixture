@@ -60,7 +60,7 @@ export const ADD_USER = gql`
 // `;
 
 export const ADD_PRODUCT = gql`
-  mutation addProduct($product: product) {
+  mutation addProduct($product: ProductInput!) {
     addProduct(product: $product) {
       products {
         title
@@ -77,16 +77,16 @@ export const ADD_PRODUCT = gql`
 export const REMOVE_PRODUCT = gql`
   mutation removeProduct($_id: ID!) {
     removeProduct(ID: $_id) {
-        _id
-        username
-        email
-        products {
-          title
-          description
-          price
-          thumbnailKey
-          fileKey
-        }
+      _id
+      username
+      email
+      products {
+        title
+        description
+        price
+        thumbnailKey
+        fileKey
       }
     }
+  }
 `;
