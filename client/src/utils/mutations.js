@@ -30,21 +30,25 @@ export const ADD_ORDER = gql`
 `;
 
 export const ADD_USER = gql`
-  mutation addUser(
-    $firstName: String!
-    $lastName: String!
-    $email: String!
-    $password: String!
-  ) {
-    addUser(
-      firstName: $firstName
-      lastName: $lastName
-      email: $email
-      password: $password
-    ) {
+  mutation addUser($email: String!, $password: String!) {
+    addUser(email: $email, password: $password) {
       token
       user {
         _id
+      }
+    }
+  }
+`;
+
+export const CREATE_PRODUCT = gql`
+  mutation createProduct($title: String!, $description: String!, $price: String!, thumbnailKey: String!, fileKey: String!){
+    createProduct(title: $title, description: $description, price: $price, thumbnailKey: $thumbnailKey, fileKey: $fileKey){
+      product{
+        title
+        description
+        price
+        productKey
+        fileKey
       }
     }
   }
