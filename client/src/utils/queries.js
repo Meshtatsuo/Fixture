@@ -7,10 +7,6 @@ export const QUERY_ALL_PRODUCTS = gql`
       name
       description
       price
-      quantity
-      category {
-        name
-      }
     }
   }
 `;
