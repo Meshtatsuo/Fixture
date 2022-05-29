@@ -149,6 +149,8 @@ const resolvers = {
       );
     },
     addProduct: async (parent, { product }, context) => {
+      console.log(product);
+      return true;
       /* Will refactor this once I get this resolver working
       if (context.user) {
         const product = await Product.create({ ...args, username: context.user.username });

@@ -1,4 +1,7 @@
 import React, { useState } from "react";
+import { useMutation } from "@apollo/client";
+
+import { ADD_PRODUCT } from "../utils/mutations";
 
 import image from "../assets/images/create-product.jpg";
 
@@ -11,12 +14,29 @@ const NewProduct = (props) => {
     productFile: "",
     productThumbnail: "",
   });
-  // const[create, {error}] = useMutation(CREATE_PRODUCT);
+  const [create, { error }] = useMutation(ADD_PRODUCT);
 
   // handle form submission
   const handleFormSubmit = async (event) => {
     event.preventDefault();
-    console.log(formState);
+    const product = {
+      title: formState.productTitle,
+      description: formState.productDescription,
+      price: formState.productPrice,
+      thumbnailKey: formState.productThumbnail,
+      fileKey: formState.productFile,
+    };
+    try {
+      console.log("Sending Data...");
+      const response = await create(product);
+      if (!response) {
+        console.log("No Response");
+      } else {
+        console.log(response);
+      }
+    } catch (e) {
+      console.log(e);
+    }
   };
 
   // handle form change
@@ -34,7 +54,7 @@ const NewProduct = (props) => {
           Create your product.
         </h1>
         <form onSubmit={handleFormSubmit}>
-          <div id="productTitle" class="flex">
+          <div id="productTitle" className="flex">
             <label
               htmlFor="productTitle"
               className="font-bold align-middle text-2xl p-5 "
@@ -50,7 +70,7 @@ const NewProduct = (props) => {
             />
           </div>
 
-          <div id="productDescription" class="flex flex-wrap">
+          <div id="productDescription" className="flex flex-wrap">
             <label
               htmlFor="productDescription"
               className="font-bold align-middle text-2xl p-5 w-full"

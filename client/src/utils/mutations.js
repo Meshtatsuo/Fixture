@@ -40,14 +40,14 @@ export const ADD_USER = gql`
   }
 `;
 
-export const CREATE_PRODUCT = gql`
-  mutation createProduct($title: String!, $description: String!, $price: String!, thumbnailKey: String!, fileKey: String!){
-    createProduct(title: $title, description: $description, price: $price, thumbnailKey: $thumbnailKey, fileKey: $fileKey){
-      product{
+export const ADD_PRODUCT = gql`
+  mutation AddProduct($product: product) {
+    addProduct(product: $product) {
+      products {
         title
         description
         price
-        productKey
+        thumbnailKey
         fileKey
       }
     }
