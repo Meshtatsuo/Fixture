@@ -11,23 +11,74 @@ export const QUERY_ALL_PRODUCTS = gql`
   }
 `;
 
+export const QUERY_PRODUCT = gql`
+  query product($id: ID!) {
+    product(_id: $id) {
+      _id
+      title
+      description
+      price
+      thumbnailKey
+      fileKey
+      fileName
+      createdAt
+    }
+  }
+`;
+
 export const QUERY_USER = gql`
   {
     user {
-      firstName
-      lastName
+      username
       orders {
         _id
         purchaseDate
         products {
           _id
-          name
+          title
           description
           price
-          quantity
-          image
+          thumbnailKey
+          fileKey
+          fileName
+          createdAt
         }
       }
     }
   }
 `;
+
+export const QUERY_ME = gql`
+  {
+    me {
+      _id
+      username
+      email
+      products {
+        _id
+        title
+        description
+        price
+        thumbnailKey
+        fileKey
+        fileName
+        createdAt
+      }
+      orders {
+        _id
+        purchaseDate
+        products {
+          _id
+          title
+          description
+          price
+          thumbnailKey
+          fileKey
+          fileName
+          createdAt
+        }
+      }
+    }
+  }
+`;
+

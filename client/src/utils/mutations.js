@@ -17,31 +17,50 @@ export const ADD_ORDER = gql`
       purchaseDate
       products {
         _id
-        name
+        title
         description
         price
-        quantity
-        category {
-          name
-        }
+        thumbnailKey
+        fileKey
+        fileName
+        createdAt
       }
     }
   }
 `;
 
 export const ADD_USER = gql`
-  mutation addUser($email: String!, $password: String!) {
-    addUser(email: $email, password: $password) {
+  mutation addUser($username: String!, $email: String!, $password: String!) {
+    addUser(username: $username, email: $email, password: $password) {
       token
       user {
         _id
+        username
       }
     }
   }
 `;
 
+//Below is one option for this mutation (uses ProductInput)
+// export const ADD_PRODUCT = gql`
+//   mutation addProduct($product: ProductInput!) {
+//     addProduct(product: $product) {
+//       _id
+//       username
+//       email
+//       products {
+//         title
+//         description
+//         price
+//         thumbnailKey
+//         fileKey
+//       }
+//     }
+//   }
+// `;
+
 export const ADD_PRODUCT = gql`
-  mutation AddProduct($product: product) {
+  mutation addProduct($product: product) {
     addProduct(product: $product) {
       products {
         title
@@ -52,4 +71,22 @@ export const ADD_PRODUCT = gql`
       }
     }
   }
+`;
+
+//This has not been tested, unsure how to use _id
+export const REMOVE_PRODUCT = gql`
+  mutation removeProduct($_id: ID!) {
+    removeProduct(ID: $_id) {
+        _id
+        username
+        email
+        products {
+          title
+          description
+          price
+          thumbnailKey
+          fileKey
+        }
+      }
+    }
 `;
