@@ -1,10 +1,8 @@
 import React, { useState } from "react";
 import { useMutation } from "@apollo/client";
 import axios from "axios";
-import { print } from "graphql";
 
-import { ADD_PRODUCT, ADD_USER } from "../../utils/mutations";
-import { getFileName } from "../../utils/helpers";
+import { ADD_PRODUCT } from "../../utils/mutations";
 
 const NewProductForm = () => {
   const [formState, setFormState] = useState({
@@ -56,7 +54,6 @@ const NewProductForm = () => {
     } catch (e) {
       console.log(e);
     }
-
     // Now we can create our product
     try {
       const response = await create({
