@@ -32,13 +32,12 @@ const Cart = () => {
           <CartItem />
           <CartItem />
           <CartItem />
-          <CartItem />
         </div>
         <div className="flex flex-wrap">
           <p className="flex-1 w-full px-6 font-bold text-xl text-right">
             Total:
           </p>
-          <p className="px-6 font-bold text-xl">$200.00</p>
+          <p className="px-6 font-bold text-xl">$150.00</p>
         </div>
         <button className="font-bold float-right text-md py-3 px-6 m-5 rounded-xl bg-orange-200 border-2 border-black">
           Checkout
