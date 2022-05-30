@@ -1,7 +1,10 @@
 import React, { useState } from "react";
 import { useMutation } from "@apollo/client";
+import axios from "axios";
+import { print } from "graphql";
 
-import { ADD_PRODUCT } from "../utils/mutations";
+import { ADD_PRODUCT, ADD_USER } from "../utils/mutations";
+import { getFileName } from "../utils/helpers";
 
 import image from "../assets/images/create-product.jpg";
 
@@ -19,33 +22,89 @@ const NewProduct = (props) => {
   // handle form submission
   const handleFormSubmit = async (event) => {
     event.preventDefault();
-    const product = {
-      title: formState.productTitle,
-      description: formState.productDescription,
-      price: formState.productPrice,
-      thumbnailKey: formState.productThumbnail,
-      fileKey: formState.productFile,
-    };
+
+    // set up variables to send to graphql
+    const title = formState.productTitle;
+    const description = formState.productDescription;
+    const price = toString(formState.productPrice);
+    let fileKey = formState.productFile;
+    const fileName = formState.productFile.name;
+    let thumb = formState.productThumbnail;
+
+    // First: Upload product file
     try {
-      console.log("Sending Data...");
-      const response = await create(product);
+      const data = new FormData();
+      data.append("file", formState.productFile);
+
+      const response = await axios.post("/uploadProduct", data);
       if (!response) {
-        console.log("No Response");
+        console.log("ERROR");
+      }
+      fileKey = response.data;
+    } catch (e) {
+      console.log(e);
+    }
+
+    // Next: Upload thumbnail
+    try {
+      const data = new FormData();
+      data.append("file", formState.productThumbnail);
+
+      const response = await axios.post("/uploadThumbnail", data);
+      if (!response) {
+        console.log("ERROR RETRIEVING THUMBNAIL KEY");
       } else {
-        console.log(response);
+        thumb = response.data;
       }
     } catch (e) {
       console.log(e);
+    }
+
+    // Now we can create our product
+    try {
+      const response = await create({
+        variables: {
+          product: {
+            title: title,
+            description: description,
+            price: null,
+            thumbnailKey: thumb,
+            fileKey: fileKey,
+            fileName: fileName,
+          },
+        },
+      });
+
+      if (!response) {
+        console.log("Error creating product");
+      } else {
+        console.log(response);
+      }
+    } catch (err) {
+      console.log(err);
     }
   };
 
   // handle form change
   const handleChange = (event) => {
-    const { name, value } = event.target;
-    setFormState({
-      ...formState,
-      [name]: value,
-    });
+    console.log(event.target.id);
+    if (event.target.id === "product-upload") {
+      const { name } = event.target;
+      const newVal = event.target.files[0];
+      console.log(newVal);
+      formState.productFile = newVal;
+    } else if (event.target.id === "thumbnail-upload") {
+      const { name } = event.target;
+      const newVal = event.target.files[0];
+      console.log(newVal);
+      formState.productThumbnail = newVal;
+    } else {
+      const { name, value } = event.target;
+      setFormState({
+        ...formState,
+        [name]: value,
+      });
+    }
   };
   return (
     <div className="container m-auto p-3 my-5 flex">
@@ -123,6 +182,7 @@ const NewProduct = (props) => {
             <input
               type="file"
               name="productFile"
+              id="product-upload"
               accept=".png, .jpg, .jpeg, .png, .zip, .pdf "
               onChange={handleChange}
               className="font-bold align-middle text-md p-5"
@@ -144,6 +204,7 @@ const NewProduct = (props) => {
             <input
               type="file"
               name="productThumbnail"
+              id="thumbnail-upload"
               accept=".png, .jpg, .jpeg"
               onChange={handleChange}
               className="font-bold align-middle text-md p-5"
