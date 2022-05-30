@@ -8,10 +8,13 @@ const NewProductForm = () => {
   const [formState, setFormState] = useState({
     productTitle: "",
     productDescription: "",
-    productPrice: "",
+    productPrice: 0,
     productFile: "",
     productThumbnail: "",
   });
+
+  const [errorMessage, setErrorMessage] = useState("");
+
   const [create, { error }] = useMutation(ADD_PRODUCT);
 
   // handle form submission
@@ -21,10 +24,31 @@ const NewProductForm = () => {
     // set up variables to send to graphql
     const title = formState.productTitle;
     const description = formState.productDescription;
-    const price = toString(formState.productPrice);
+    const price = Number(formState.productPrice);
     let fileKey = formState.productFile;
     const fileName = formState.productFile.name;
     let thumb = formState.productThumbnail;
+    console.log(price);
+    if (!title || title === "") {
+      setErrorMessage("Product title is required!");
+      return;
+    }
+    if (!description || description === "") {
+      setErrorMessage("Product description is required!");
+      return;
+    }
+    if (isNaN(price)) {
+      setErrorMessage("Please enter a valid price in proper currency format!");
+      return;
+    }
+    if (!fileKey || fileKey === null) {
+      setErrorMessage("Please select a product file to upload!");
+      return;
+    }
+    if (!thumb || thumb === null) {
+      setErrorMessage("Please select a valid thumbnail image to upload!");
+      return;
+    }
 
     // First: Upload product file
     try {
@@ -54,6 +78,15 @@ const NewProductForm = () => {
     } catch (e) {
       console.log(e);
     }
+    const product = {
+      title: title,
+      description: description,
+      price: price,
+      thumbnailKey: thumb,
+      fileKey: fileKey,
+      fileName: fileName,
+    };
+
     // Now we can create our product
     try {
       const response = await create({
@@ -61,7 +94,7 @@ const NewProductForm = () => {
           product: {
             title: title,
             description: description,
-            price: null,
+            price: price,
             thumbnailKey: thumb,
             fileKey: fileKey,
             fileName: fileName,
@@ -73,6 +106,8 @@ const NewProductForm = () => {
         console.log("Error creating product");
       } else {
         console.log(response);
+        const prodID = response.data.addProduct._id;
+        window.location.assign(`/view/${prodID}`);
       }
     } catch (err) {
       console.log(err);
@@ -92,6 +127,20 @@ const NewProductForm = () => {
       const newVal = event.target.files[0];
       console.log(newVal);
       formState.productThumbnail = newVal;
+    } else if (event.target.id === "product-price") {
+      // checks input for numerical values, and wipes
+      // input if invalid to force user to only use
+      // numerics
+      const input = event.target.value;
+      if (!isNaN(input)) {
+        const { name, value } = event.target;
+        setFormState({
+          ...formState,
+          [name]: value,
+        });
+      } else {
+        event.target.value = "";
+      }
     } else {
       const { name, value } = event.target;
       setFormState({
@@ -147,6 +196,7 @@ const NewProductForm = () => {
         <input
           placeholder="10.00"
           name="productPrice"
+          id="product-price"
           type="text"
           onChange={handleChange}
           className="my-3 p-3 mr-5 flex-1 align-middle bg-orange-100 rounded border-solid "
@@ -200,6 +250,13 @@ const NewProductForm = () => {
           className="font-bold align-middle text-md p-5"
         />
       </div>
+      {errorMessage && (
+        <div>
+          <p className="error-text font-bold align-middle text-s px-10 pb-5 text-red-700">
+            {errorMessage}
+          </p>
+        </div>
+      )}
       <button
         className="font-bold align-middle text-s px-10 pb-5 bg-orange-100 rounded border-black"
         onClick={handleFormSubmit}

@@ -61,7 +61,7 @@ function App() {
               <Route path="/browse" element={<Browse />} />
               <Route path="new-product" element={<NewProduct />} />
               <Route path="profile" element={<Profile />} />
-              <Route path="viewProduct" element={<ViewProduct />} />
+              <Route path="view/:id" element={<ViewProduct />} />
               <Route path="cart" element={<Cart />} />
             </Routes>
           </StoreProvider>
