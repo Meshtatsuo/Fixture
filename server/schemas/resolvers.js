@@ -152,24 +152,22 @@ const resolvers = {
       );
     },
     addProduct: async (parent, { product }, context) => {
-      console.log("Hey you got here");
-      console.log(product);
-
-      /* Will refactor this once I get this resolver working
       if (context.user) {
-        const product = await Product.create({ ...args, username: context.user.username });
-    
+        const product = await Product.create({
+          ...args,
+          username: context.user.username,
+        });
+
         await User.findByIdAndUpdate(
           { _id: context.user._id },
           { $push: { products: product } },
           { new: true }
         );
-    
+
         return product;
       }
-    
-      throw new AuthenticationError('You need to be logged in!');
-      */
+
+      throw new AuthenticationError("You need to be logged in!");
     },
     //may not need this?
     saveProduct: async (parent, { product }, context) => {

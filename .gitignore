@@ -5,6 +5,7 @@
 
 # uploads from multer
 /uploads
+/server/uploads
 
 # compiled output
 /dist
