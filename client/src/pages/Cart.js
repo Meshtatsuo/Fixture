@@ -21,13 +21,13 @@ const Cart = () => {
   return (
     <div>
       <img src={Jumbo} alt="fixture jumbo" />
-      <div className="container m-auto columns-1">
+      <div classNameName="container m-auto columns-1">
         <div className="p-5 align-middle">
           <h1 className="font-bold align-middle text-4xl p-10">My Cart</h1>{" "}
-          <div class="container flex p-3 border-b-2">
-            <div class="flex-1 font-bold text-m">Item Name</div>
-            <div class="flex-0 px-6 font-bold text-m">Quantity</div>
-            <div class="flex-0 px-6 font-bold text-m">Price</div>
+          <div classNam="container flex p-3 border-b-2">
+            <div classNam="flex-1 font-bold text-m">Item Name</div>
+            <div classNam="flex-0 px-6 font-bold text-m">Quantity</div>
+            <div classNam="flex-0 px-6 font-bold text-m">Price</div>
           </div>
           <CartItem />
           <CartItem />
