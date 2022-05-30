@@ -153,7 +153,7 @@ const resolvers = {
     },
     addProduct: async (parent, { product }, context) => {
       console.log("Hey you got here");
-      console.log(JSON.parse(product.fileKey));
+      console.log(product);
 
       /* Will refactor this once I get this resolver working
       if (context.user) {

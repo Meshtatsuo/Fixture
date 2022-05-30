@@ -25,13 +25,26 @@ const server = new ApolloServer({
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 
-async function startApolloServer() {
+async function startServer() {
   await server.start();
   server.applyMiddleware({ app });
-}
-// if we're in production, serve client/build as static assets
-if (process.env.NODE_ENV === "production") {
-  app.use(express.static(path.join(__dirname, "../client/build")));
+  db.once("open", () => {
+    app.listen(PORT, () => {
+      console.log(`API server running on port ${PORT}!`);
+      console.log(
+        `Use GraphQL at http://localhost:${PORT}${server.graphqlPath}`
+      );
+    });
+  });
+
+  // if we're in production, serve client/build as static assets
+  if (process.env.NODE_ENV === "production") {
+    app.use(express.static(path.join(__dirname, "../client/build")));
+  }
+
+  app.get("*", (req, res) => {
+    res.sendFile(path.join(__dirname, "../client/build/index.html"));
+  });
 }
 
 // REST routes for S3 uploading and downloading
@@ -68,15 +81,4 @@ app.get("/image/:key", async (req, res) => {
   }
 });
 
-app.get("*", (req, res) => {
-  res.sendFile(path.join(__dirname, "../client/build/index.html"));
-});
-
-db.once("open", () => {
-  app.listen(PORT, () => {
-    console.log(`API server running on port ${PORT}!`);
-    console.log(`Use GraphQL at http://localhost:${PORT}${server.graphqlPath}`);
-  });
-});
-
-startApolloServer;
+startServer();

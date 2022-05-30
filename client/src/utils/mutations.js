@@ -63,6 +63,7 @@ export const ADD_PRODUCT = gql`
   mutation addProduct($product: ProductInput!) {
     addProduct(product: $product) {
       products {
+        _id
         title
         description
         price
