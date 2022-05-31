@@ -64,7 +64,7 @@ function App() {
               <Route path="/features" element={<Features />} />
               <Route path="new-product" element={<NewProduct />} />
               <Route path="profile" element={<Profile />} />
-              <Route path="view/:id" element={<ViewProduct />} />
+              <Route path="view" element={<ViewProduct />} />
               <Route path="cart" element={<Cart />} />
               <Route path="/success" element={<Success />} />
             </Routes>
