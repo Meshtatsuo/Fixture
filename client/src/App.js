@@ -17,6 +17,7 @@ import Profile from "./pages/Profile";
 import Signup from "./pages/Signup";
 import ViewProduct from "./pages/ViewProduct";
 import Features from "./pages/Features";
+import Success from "./pages/Success";
 
 // Import components
 import Nav from "./components/Nav";
@@ -65,6 +66,7 @@ function App() {
               <Route path="profile" element={<Profile />} />
               <Route path="view/:id" element={<ViewProduct />} />
               <Route path="cart" element={<Cart />} />
+              <Route path="/success" element={<Success />} />
             </Routes>
           </StoreProvider>
         </div>
