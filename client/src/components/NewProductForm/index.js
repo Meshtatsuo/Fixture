@@ -156,9 +156,12 @@ const NewProductForm = () => {
     let key = "330e9c3ca30602cc4d465f7afe07acc9";
     let fileName = "testFile.zip";
 
-    const url = await axios.get(`download/${key}/${fileName}`, {
-      responseType: "stream",
-    });
+    const url = await axios.get(
+      "/download/330e9c3ca30602cc4d465f7afe07acc9/test.zip,
+      {
+        responseType: "stream",
+      }
+    );
 
     if (!url) {
       console.log("An error has occurred");
