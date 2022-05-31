@@ -1,4 +1,5 @@
 import React from "react";
+import { Link } from "react-router-dom";
 import Jumbo from "../assets/images/Jumbo.png";
 
 const Landing = () => {
@@ -20,7 +21,7 @@ const Landing = () => {
         </div>
         <div>
           <h1 className="font-bold align-right text-4xl p-10 flex-1">
-            Start Selling Today
+            <Link to="/login">Start Selling Today</Link>
           </h1>
         </div>
       </div>
