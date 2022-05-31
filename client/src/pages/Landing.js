@@ -7,7 +7,7 @@ const Landing = () => {
   return (
     <div>
       <img src={Jumbo} alt="fixture jumbo" />
-      <div className="container m-auto columns-2">
+      <div className="container m-auto lg:columns-2 md:columns-1 sm:p-5">
         <div className="p-5 align-middle">
           <h1 className="font-bold align-middle text-4xl p-10">
             Welcome to Fixture

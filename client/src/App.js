@@ -16,6 +16,7 @@ import NewProduct from "./pages/NewProduct";
 import Profile from "./pages/Profile";
 import Signup from "./pages/Signup";
 import ViewProduct from "./pages/ViewProduct";
+import Features from "./pages/Features";
 
 // Import components
 import Nav from "./components/Nav";
@@ -59,6 +60,7 @@ function App() {
               <Route path="/login" element={<Login />} />
               <Route path="/signup" element={<Signup />} />
               <Route path="/browse" element={<Browse />} />
+              <Route path="/features" element={<Features />} />
               <Route path="new-product" element={<NewProduct />} />
               <Route path="profile" element={<Profile />} />
               <Route path="view/:id" element={<ViewProduct />} />
