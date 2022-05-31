@@ -1,15 +1,15 @@
-import React, { useEffect } from 'react';
-import { QUERY_CHECKOUT } from '../utils/queries';
-import { loadStripe } from '@stripe/stripe-js';
-import { useLazyQuery } from '@apollo/client';
-import { idbPromise } from '../utils/helpers';
+import React, { useEffect } from "react";
+import { QUERY_CHECKOUT } from "../utils/queries";
+import { loadStripe } from "@stripe/stripe-js";
+import { useLazyQuery } from "@apollo/client";
+import { idbPromise } from "../utils/helpers";
 import CartItem from "../components/CartItem";
 import Jumbo from "../assets/images/cart-jumbo.png";
-import { ADD_MULTIPLE_TO_CART } from '../utils/actions';
+import { ADD_MULTIPLE_TO_CART } from "../utils/actions";
 import Auth from "../utils/auth";
 import { useStoreContext } from "../utils/GlobalState";
 
-const stripePromise = loadStripe('pk_test_TYooMQauvdEDq54NiTphI7jx');
+const stripePromise = loadStripe("pk_test_TYooMQauvdEDq54NiTphI7jx");
 
 const Cart = () => {
   const [state, dispatch] = useStoreContext();
@@ -26,7 +26,7 @@ const Cart = () => {
 
   function submitCheckout() {
     const productIds = [];
-  
+
     state.cart.forEach((item) => {
       for (let i = 0; i < item.purchaseQuantity; i++) {
         productIds.push(item._id);
@@ -34,7 +34,7 @@ const Cart = () => {
     });
 
     getCheckout({
-      variables: { products: productIds }
+      variables: { products: productIds },
     });
   }
 
@@ -48,7 +48,7 @@ const Cart = () => {
 
   useEffect(() => {
     async function getCart() {
-      const cart = await idbPromise('cart', 'get');
+      const cart = await idbPromise("cart", "get");
       dispatch({ type: ADD_MULTIPLE_TO_CART, products: [...cart] });
     }
 
@@ -60,13 +60,13 @@ const Cart = () => {
   return (
     <div>
       <img src={Jumbo} alt="fixture jumbo" />
-      <div classNameName="container m-auto columns-1">
+      <div className="container m-auto columns-1">
         <div className="p-5 align-middle">
           <h1 className="font-bold align-middle text-4xl p-10">My Cart</h1>{" "}
-          <div classNam="container flex p-3 border-b-2">
-            <div classNam="flex-1 font-bold text-m">Item Name</div>
-            <div classNam="flex-0 px-6 font-bold text-m">Quantity</div>
-            <div classNam="flex-0 px-6 font-bold text-m">Price</div>
+          <div className="container flex p-3 border-b-2">
+            <div className="flex-1 font-bold text-m">Item Name</div>
+            <div className="flex-0 px-6 font-bold text-m">Quantity</div>
+            <div className="flex-0 px-6 font-bold text-m">Price</div>
           </div>
           <CartItem />
           <CartItem />
@@ -76,9 +76,11 @@ const Cart = () => {
           <p className="flex-1 w-full px-6 font-bold text-xl text-right">
             Total: ${calculateTotal()}
           </p>
-          <p className="px-6 font-bold text-xl">$150.00</p>
         </div>
-        <button onClick={submitCheckout} className="font-bold float-right text-md py-3 px-6 m-5 rounded-xl bg-orange-200 border-2 border-black">
+        <button
+          onClick={submitCheckout}
+          className="font-bold float-right text-md py-3 px-6 m-5 rounded-xl bg-orange-200 border-2 border-black"
+        >
           Checkout
         </button>
       </div>
