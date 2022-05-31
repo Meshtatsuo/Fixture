@@ -62,7 +62,7 @@ const Cart = () => {
       <img src={Jumbo} alt="fixture jumbo" />
       <div className="container m-auto columns-1">
         <div className="p-5 align-middle">
-          <h1 className="font-bold align-middle text-4xl p-10">My Cart</h1>{" "}
+          <h1 className="font-bold align-middle text-4xl p-10">My Cart</h1>
           <div className="container flex p-3 border-b-2">
             <div className="flex-1 font-bold text-m">Item Name</div>
             <div className="flex-0 px-6 font-bold text-m">Quantity</div>

@@ -10,7 +10,7 @@ function Nav() {
       <div className="container mx-auto lg:columns-2 sm:columns-1">
         <Link to="/">
           <img
-            className="p-3 md:max-w-xs sm:max-w-xs md:m-auto sm:m-auto xs:m-auto"
+            className="p-3 md:max-w-xs sm:max-w-xs md:m-auto lg:m-0 sm:m-auto xs:m-auto"
             alt="logo"
             src={Logo}
           />

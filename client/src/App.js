@@ -62,10 +62,10 @@ function App() {
               <Route path="/signup" element={<Signup />} />
               <Route path="/browse" element={<Browse />} />
               <Route path="/features" element={<Features />} />
-              <Route path="new-product" element={<NewProduct />} />
-              <Route path="profile" element={<Profile />} />
-              <Route path="view" element={<ViewProduct />} />
-              <Route path="cart" element={<Cart />} />
+              <Route path="/new-product" element={<NewProduct />} />
+              <Route path="/profile" element={<Profile />} />
+              <Route path="/view" element={<ViewProduct />} />
+              <Route path="/cart" element={<Cart />} />
               <Route path="/success" element={<Success />} />
             </Routes>
           </StoreProvider>
