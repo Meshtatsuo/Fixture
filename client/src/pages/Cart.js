@@ -79,7 +79,7 @@ const Cart = () => {
         </div>
         <button
           onClick={submitCheckout}
-          className="font-bold float-right text-md py-3 px-6 m-5 rounded-xl bg-orange-200 border-2 border-black"
+          className="font-bold float-right text-md py-3 px-6 m-5 rounded-xl bg-orange-100 hover:bg-orange-200 border-2 border-black"
         >
           Checkout
         </button>

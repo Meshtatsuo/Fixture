@@ -157,7 +157,7 @@ const NewProductForm = () => {
     let fileName = "testFile.zip";
 
     const url = await axios.get(
-      "/download/330e9c3ca30602cc4d465f7afe07acc9/test.zip,
+      "/download/330e9c3ca30602cc4d465f7afe07acc9/test.zip",
       {
         responseType: "stream",
       }
@@ -207,6 +207,7 @@ const NewProductForm = () => {
             rows="8"
           />
         </div>
+
         <div id="productPrice" className="flex">
           <label
             htmlFor="productPrice"
@@ -225,13 +226,17 @@ const NewProductForm = () => {
             className="my-3 p-3 mr-5 flex-1 align-middle bg-orange-100 rounded border-solid "
           />
         </div>
-        <h2 className="font-bold align-middle text-4xl px-10 pt-10 pb-2">
-          Upload Files:
-        </h2>
-        <p className="font-bold align-middle text-s px-10 py-3 flex-0">
-          *If your product contains multiple files, please add them to a .zip
-          file before uploading!
-        </p>
+
+        <div id="upload-file-section">
+          <h2 className="font-bold align-middle text-4xl px-10 pt-10 pb-2">
+            Upload Files:
+          </h2>
+          <p className="font-bold align-middle text-s px-10 py-3 flex-0">
+            *If your product contains multiple files, please add them to a .zip
+            file before uploading!
+          </p>
+        </div>
+
         <div id="productFile">
           <label
             htmlFor="productFile"
@@ -251,6 +256,7 @@ const NewProductForm = () => {
             className="font-bold align-middle text-md p-5"
           />
         </div>
+
         <div id="productThumbnail">
           <label
             htmlFor="productThumbnail"
@@ -273,19 +279,27 @@ const NewProductForm = () => {
             className="font-bold align-middle text-md p-5"
           />
         </div>
-        {errorMessage && (
-          <div>
-            <p className="error-text font-bold align-middle text-s px-10 pb-5 text-red-700">
-              {errorMessage}
-            </p>
-          </div>
-        )}
-        <button
-          className="font-bold align-middle text-s px-10 pb-5 bg-orange-100 rounded border-black"
-          onClick={handleFormSubmit}
-        >
-          <p className="font-bold"> Create Product </p>
-        </button>
+
+        <div id="error-message">
+          {errorMessage && (
+            <div>
+              <p className="error-text font-bold align-middle text-s px-10 pb-5 text-red-700">
+                {errorMessage}
+              </p>
+            </div>
+          )}
+        </div>
+
+        <div id="submit-button">
+          <button
+            className="font-bold align-middle text-s p-2 bg-orange-100 hover:bg-orange-200 border-2 border-black float-right rounded"
+            onClick={handleFormSubmit}
+          >
+            <p className="font-bold"> Create Product </p>
+          </button>
+        </div>
+
+
       </form>
     </>
   );
