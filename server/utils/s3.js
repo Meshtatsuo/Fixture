@@ -41,24 +41,16 @@ function getFile(fileKey) {
   return fileStream;
 }
 
-function downloadFile(fileKey, fileName) {
-  const downloadParams = {
+async function downloadFile(fileKey, fileName) {
+  const params = {
     Bucket: bucket,
-    Key: fileKey,
+    Key: fileKey, // this key is the S3 full file path (ex: mnt/sample.txt)
+    Expires: 3600,
+    ResponseContentDisposition: `attachment; filename="${fileName}"`,
   };
-  s3.getObject(downloadParams, (err, res) => {
-    if (err === null) {
-      // these return variables then need to be sent back in this fashion:
-      // res.attachment([nameofreturnvar].attachment)
-      // res.send([nameofreturnvar].body)
-      return {
-        attachment: fileName,
-        body: data.body,
-      };
-    } else {
-      return err;
-    }
-  });
+
+  const url = s3.getSignedUrl("getObject", params);
+  return url;
 }
 
 module.exports = {
