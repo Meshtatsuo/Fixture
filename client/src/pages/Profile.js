@@ -13,9 +13,9 @@ const Profile = () => {
 
   if (data) {
     console.log(data);
-    username = data?.me_all.username;
-    products = data?.me_all.products;
-    purchases = data?.me_all.purchases;
+    username = data?.me_all?.username;
+    products = data?.me_all?.products;
+    purchases = data?.me_all?.purchases;
   }
 
   return (
@@ -24,12 +24,12 @@ const Profile = () => {
         Welcome, {username}
       </h1>
 
-      <div id="profile-info" class="sm-columns-1">
+      <div id="profile-info" className="sm-columns-1">
         <h2 className="font-bold text-3xl p-10">Your Products</h2>
         <UserProductList products={products} />
       </div>
 
-      <div id="profile-info" class="md-columns-2 sm-columns-1">
+      <div id="profile-info" className="md-columns-2 sm-columns-1">
         <h2 className="font-bold text-3xl p-10">Your Purchases</h2>
         <UserPurchaseList purchases={purchases} />
       </div>
