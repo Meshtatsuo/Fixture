@@ -30,6 +30,7 @@ const resolvers = {
         const userData = await User.findOne({
           username: context.user.username,
         }).select("-__v -password");
+        // .populate("products");
 
         return userData;
       }
@@ -38,15 +39,12 @@ const resolvers = {
     },
     me_all: async (parent, args, context) => {
       if (context.user) {
+        console.log(context.user._id);
         const userData = await User.findById(context.user._id)
           .select("-__v -password")
-          .populate("products")
-          .populate("purchasedItems");
+          .populate("purchasedItems")
+          .populate("products");
 
-        if (!userData) {
-          console.log("Failed to get user data");
-          return false;
-        }
         return userData;
       }
     },
@@ -175,12 +173,12 @@ const resolvers = {
           username: context.user.username,
         });
 
-        await User.findOneAndUpdate(
+        await User.findByIdAndUpdate(
           { username: context.user.username },
           { $push: { products: newProduct } },
           { new: true }
         );
-        console.log(newProduct);
+
         return newProduct;
       }
 

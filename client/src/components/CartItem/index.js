@@ -29,16 +29,16 @@ const CartItem = ({ item }) => {
 
   return (
     <div>
-      <div class="container flex p-3 border-b-2">
-        <div class="flex-1 font-bold text-m">Test Product Name</div>
+      <div className="container flex p-3 border-b-2">
+        <div className="flex-1 font-bold text-m">Test Product Name</div>
         <input
-          class="shrink-1 px-1 py-2 w-16"
+          className="shrink-1 px-1 py-2 w-16"
           type="number"
           placeholder="1"
           value="val"
           onChange={onChange}
         />
-        <div class="shrink-1 px-5">$50.00</div>
+        <div className="shrink-1 px-5">$50.00</div>
       </div>
     </div>
   );

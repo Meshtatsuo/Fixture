@@ -3,13 +3,18 @@ import Auth from "../../utils/auth";
 import { Link } from "react-router-dom";
 import Logo from "../../assets/images/Logo.png";
 import { QUERY_ME_BASIC } from "../../utils/queries";
-import { useQuery } from '@apollo/client';
+import { useQuery } from "@apollo/client";
 function Nav() {
   const { data } = useQuery(QUERY_ME_BASIC);
   let username;
+  let profileLink;
   console.log(data);
   if (data) {
     username = data.me.username;
+    username = username.toUpperCase();
+    profileLink = `/profile/${username}`;
+  } else {
+    profileLink = "/login";
   }
   return (
     <div className="mr-auto shadow-xl">
@@ -29,7 +34,11 @@ function Nav() {
             <Link to="/features">FEATURES</Link>
           </h2>
           <h2 className="flex-1 text-center py-4 text-xl align-middle font-bold">
-             {Auth.loggedIn() ?  (<Link to="/profile"> {username} </Link>) :( <Link to="/login"> LOGIN/SIGNUP </Link>)}
+            {Auth.loggedIn() ? (
+              <Link to={profileLink}> {username} </Link>
+            ) : (
+              <Link to="/login"> LOGIN/SIGNUP </Link>
+            )}
           </h2>
           <h2 className="flex-1 text-center py-4 text-xl align-middle font-bold">
             <Link to="/cart">MY CART</Link>
