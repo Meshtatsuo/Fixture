@@ -5,9 +5,9 @@ function UserPurchaseList(props) {
   const data = props;
   return (
     <div className="my-2">
-      {data?.length ? (
-        <div className="flex-row">
-          {data.map((product) => (
+      {data?.purchases?.length ? (
+        <div className="flex-row px-10">
+          {data.purchases.map((product) => (
             <ProductCard
               key={product._id}
               _id={product._id}
