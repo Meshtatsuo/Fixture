@@ -30,27 +30,6 @@ export const QUERY_PRODUCT = gql`
   }
 `;
 
-export const QUERY_USER = gql`
-  {
-    user {
-      username
-      orders {
-        _id
-        purchaseDate
-        products {
-          _id
-          title
-          description
-          price
-          thumbnailKey
-          fileKey
-          fileName
-          createdAt
-        }
-      }
-    }
-  }
-`;
 export const QUERY_ME_BASIC = gql`
   {
     me {
@@ -60,23 +39,14 @@ export const QUERY_ME_BASIC = gql`
     }
   }
 `;
+
 export const QUERY_ME = gql`
   {
-    me {
+    me_all {
       _id
       username
       email
-      products {
-        _id
-        title
-        description
-        price
-        thumbnailKey
-        fileKey
-        fileName
-        createdAt
-      }
-      orders {
+      purchasedItems {
         _id
         purchaseDate
         products {
@@ -89,6 +59,16 @@ export const QUERY_ME = gql`
           fileName
           createdAt
         }
+      }
+      products {
+        _id
+        title
+        description
+        price
+        thumbnailKey
+        fileKey
+        fileName
+        createdAt
       }
     }
   }

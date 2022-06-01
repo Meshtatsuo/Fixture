@@ -22,7 +22,7 @@ const typeDefs = gql`
     _id: ID
     username: String
     email: String
-    purchasedItems: [Product]
+    purchasedItems: [Order]
     products: [Product]
   }
 
@@ -50,6 +50,7 @@ const typeDefs = gql`
     product(_id: ID!): Product
     user: User
     me: User
+    me_all: User
     users: [User]
     order(_id: ID!): Order
     checkout(products: [ID]!): Checkout

@@ -26,17 +26,29 @@ const resolvers = {
       throw new AuthenticationError("Not logged in");
     },
     me: async (parent, args, context) => {
-      console.log(context.user);
       if (context.user) {
         const userData = await User.findOne({
           username: context.user.username,
         }).select("-__v -password");
-        // .populate("products");
 
         return userData;
       }
 
       throw new AuthenticationError("Not logged in");
+    },
+    me_all: async (parent, args, context) => {
+      if (context.user) {
+        const userData = await User.findById(context.user._id)
+          .select("-__v -password")
+          .populate("products")
+          .populate("purchasedItems");
+
+        if (!userData) {
+          console.log("Failed to get user data");
+          return false;
+        }
+        return userData;
+      }
     },
     users: async () => {
       return User.find().select("-__v -password").populate("products");
@@ -163,12 +175,12 @@ const resolvers = {
           username: context.user.username,
         });
 
-        await User.findByIdAndUpdate(
+        await User.findOneAndUpdate(
           { username: context.user.username },
           { $push: { products: newProduct } },
           { new: true }
         );
-
+        console.log(newProduct);
         return newProduct;
       }
 
