@@ -28,11 +28,11 @@ const resolvers = {
     me: async (parent, args, context) => {
       console.log(context.user);
       if (context.user) {
-        
-        const userData = await User.findOne({ username: context.user.username })
-          .select("-__v -password")
-          // .populate("products");
-          
+        const userData = await User.findOne({
+          username: context.user.username,
+        }).select("-__v -password");
+        // .populate("products");
+
         return userData;
       }
 
@@ -155,18 +155,18 @@ const resolvers = {
     },
     addProduct: async (parent, { product }, context) => {
       if (context.user) {
-        const product = await Product.create({
-          ...args,
+        const newProduct = await Product.create({
+          ...product,
           username: context.user.username,
         });
 
         await User.findByIdAndUpdate(
-          { _id: context.user._id },
-          { $push: { products: product } },
+          { username: context.user.username },
+          { $push: { products: newProduct } },
           { new: true }
         );
 
-        return product;
+        return newProduct;
       }
 
       throw new AuthenticationError("You need to be logged in!");
