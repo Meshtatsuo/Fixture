@@ -66,7 +66,7 @@ function App() {
               <Route path="/profile/:username" element={<Profile />} />
               <Route path="/view/:id" element={<ViewProduct />} />
               <Route path="/cart" element={<Cart />} />
-              <Route path="/success" element={<Success />} />
+              <Route path="/success/:sessionId" element={<Success />} />
             </Routes>
           </StoreProvider>
         </div>

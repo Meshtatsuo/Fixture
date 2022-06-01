@@ -64,6 +64,7 @@ const resolvers = {
       throw new AuthenticationError("Not logged in");
     },
     checkout: async (parent, args, context) => {
+      const url = new URL(context.headers.referer).origin;
       console.log(args);
       let order;
 
@@ -73,7 +74,6 @@ const resolvers = {
 
       let { products } = await order.populate("products");
       const line_items = [];
-      const url = new URL(context.headers.referer).origin;
       console.log("Setting up product list");
 
       for (let i = 0; i < products.length; i++) {
@@ -81,7 +81,6 @@ const resolvers = {
         const product = await stripe.products.create({
           name: products[i].title,
           description: products[i].description,
-          //add image here thumbnailKey: [`${url}/images/${products[i].image}`]
         });
         console.log("setting up prices");
         // generate price id using the product id
@@ -103,10 +102,11 @@ const resolvers = {
         payment_method_types: ["card"],
         line_items,
         mode: "payment",
-        success_url: `${url}/success?session_id=$CHECKOUT_SESSION_ID}`,
+        success_url: `${url}/success/{CHECKOUT_SESSION_ID}`,
         cancel_url: `${url}/`,
       });
       console.log("Setup complete!");
+      console.log(session);
       return {
         session: session.id,
       };

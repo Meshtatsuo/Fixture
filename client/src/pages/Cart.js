@@ -31,7 +31,6 @@ const Cart = () => {
           productIds.push(item._id);
         }
       });
-      console.log(productIds);
     } catch (e) {
       console.log(e);
     }
@@ -47,7 +46,6 @@ const Cart = () => {
       stripePromise.then((res) => {
         res.redirectToCheckout({ sessionId: data.checkout.session });
       });
-      console.log(data.checkout);
     }
   }, [data]);
 
