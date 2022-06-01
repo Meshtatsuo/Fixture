@@ -1,6 +1,7 @@
 const { Schema, model } = require("mongoose");
 const bcrypt = require("bcrypt");
 const productSchema = require("./Product");
+const Order = require("./Order");
 
 const userSchema = new Schema(
   {
@@ -23,14 +24,19 @@ const userSchema = new Schema(
     },
     //orders: [Order.schema],
     //check this
-    product: [
+    products: [
       // I'm not sure if this wil return purchased items or just the items listed by the user
       {
         type: Schema.Types.ObjectId,
         ref: "Product",
       },
     ],
-    //purchasedItems: [productSchema]
+    purchasedItems: [
+      {
+        type: Schema.Types.ObjectId,
+        ref: "Order",
+      },
+    ],
   }
   // may be adding virtuals for additional fields
   // ,
