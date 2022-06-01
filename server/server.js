@@ -5,7 +5,7 @@ const { ApolloServer } = require("apollo-server-express");
 const { authMiddleware } = require("./utils/auth");
 
 const multer = require("multer");
-const { uploadFile, downloadFile } = require("./utils/s3");
+const { uploadFile, downloadFile, getFile } = require("./utils/s3");
 
 const upload = multer({
   dest: "uploads/",
@@ -74,7 +74,7 @@ app.get("/image/:key", async (req, res) => {
   const key = req.params.key;
   console.log("Looking up image || " + key + " ||");
   try {
-    const readStream = await getFileStream(key);
+    const readStream = await getFile(key);
     readStream.pipe(res);
   } catch (err) {
     console.log(err);
