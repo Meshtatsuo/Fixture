@@ -1,50 +1,73 @@
 # Fixture
 
-   Fixture is a premium online digital sales platform that allows you to take control of your e-commerce hustle. List products, track sales, share with creators. Sign up and see for yourself.
-  
-  [Application LINK](https://peaceful-fjord-92696.herokuapp.com/)
-  
-  ![Capture](https://user-images.githubusercontent.com/62854222/171210325-83c5b42e-c0f3-4dce-b0e2-15df9463ee81.JPG)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
-  ## Table of Contents
+## Description
 
-  * [License](#license)
-  * [Installation](#installation)
-  * [Technologies](#technologies)
-  * [Contributing](#contributing)
-  * [Usage](#usage)
- 
+Fixture is a premium online digital sales platform that allows you to take control of your e-commerce hustle. List products, track sales, share with creators. Sign up and see for yourself!
 
+Fixture is written in HTML, CSS, JavaScript, and JSX, utilizing Node.js, Express.js, and MongoDB for the backend server. The frontend is a React application. Packages used include Apollo Server Express, JSON Web Token for authentication and authorization, Mongoose for the database ODM, AWS SDK, bcrypt, GraphQL, and Stripe. The application is deployed to Heroku with MongDB Atlas for database services.
 
-  ## License
-  [![License: (MIT)](https://img.shields.io/badge/License-MIT-yellow.svg)](https://choosealicense.com/licenses/mit/)
+![Screenshot of Fixture](client/src/assets/images/screenshot.gif)
 
-  ## Installation
-  To install the dependencies, run the following command: 
+## Table of Contents
+- [Link to Deployed Application](#link-to-deployed-application)
+- [User Story](#user-story)
+- [Installation](#installation)
+- [Usage](#usage)
+- [Tests](#tests)
+- [Authors](#authors)
+- [License](#license)
+- [Contributing](#contributing)
+- [Questions](#questions)
 
-      `npm install`
+## Link to Deployed Application
 
+[https://peaceful-fjord-92696.herokuapp.com/](https://peaceful-fjord-92696.herokuapp.com/)
 
-To run the app in development mode, use the below command:  
+## User Story
 
-     `npm run develop`
+This e-commerce web app was created to meet the requirements of the following user story:
 
+```
+AS A merchant of the web
+I WANT a centralized marketplace
+SO THAT I can buy & sell digital goods
+```
 
-  ## Technologies
-  * Front end built with React
-  * GraphQL with Node.js and Express.js server
-  * MongoDB and Mongoose ODM for the database
-  * Deployed with Heroku
-  * Authentication using JWT
+## Installation
 
-  ## Contributing
-  * Dominic Misasi - at https://github.com/Meshtatsuo
-  * Kate Stensing - at https://github.com/kstensing
-  * Stephanie Anderson - at https://github.com/git6548
-  * Caleb Luster - at https://github.com/CalebLuster
-  * Daniel Birmingham - at https://github.com/Prolix19
-  
-  ## Usage
-    See license info
-  
+If you would like to run Fixture locally instead of visiting the deployed application, follow these steps:
 
+1. Clone the repository, or download and extract an archive of it
+2. Run `npm install` to obtain the required dependencies
+3. Run a local instance of MongoDB for the server to connect to
+
+## Usage
+
+1. Invoke the app in development mode with the command `npm run develop`
+2. Visit [http://localhost:3000/](http://localhost:3000/) to begin browsing Fixture
+
+## Tests
+
+There is no test suite included with this application.
+
+## Authors
+
+- Caleb Luster ([https://github.com/CalebLuster](https://github.com/CalebLuster))
+- Daniel Birmingham ([https://github.com/Prolix19](https://github.com/Prolix19))
+- Dominic Misasi ([https://github.com/Meshtatsuo](https://github.com/Meshtatsuo))
+- Kate Stensing ([https://github.com/kstensing](https://github.com/kstensing))
+- Stephanie Anderson ([https://github.com/git6548](https://github.com/git6548))
+
+## License
+
+[![License: (MIT)](https://img.shields.io/badge/License-MIT-yellow.svg)](https://choosealicense.com/licenses/mit/)
+
+## Contributing
+
+This project is not open to contributions at this time.
+
+## Questions
+
+Please contact the authoring team via GitHub with any additional questions you may have.
