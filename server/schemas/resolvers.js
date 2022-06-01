@@ -1,7 +1,7 @@
 const { AuthenticationError } = require("apollo-server-express");
 const { User, Product } = require("../models");
 const { signToken } = require("../utils/auth");
-const stripe = require("stripe")("sk_test_4eC39HqLyjWDarjtT1zdp7dc");
+const stripe = require("stripe")(process.env.STRIPE_KEY);
 
 // AWS functionality
 const { uploadFile, getFile, downloadFile } = require("../utils/s3.js");
@@ -99,6 +99,9 @@ const resolvers = {
     //not sure if this would actually show all products or only those tied to a user
     products: async () => {
       return User.find().select("-__v -password").populate("products");
+    },
+    allProducts: async () => {
+      return Product.find().select("-__v");
     },
   },
   Mutation: {

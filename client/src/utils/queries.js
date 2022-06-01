@@ -2,11 +2,15 @@ import { gql } from "@apollo/client";
 
 export const QUERY_ALL_PRODUCTS = gql`
   {
-    products {
+    allProducts {
       _id
-      name
+      title
       description
       price
+      thumbnailKey
+      fileKey
+      fileName
+      createdAt
     }
   }
 `;
@@ -53,8 +57,8 @@ export const QUERY_ME_BASIC = gql`
       _id
       username
       email
-      }
     }
+  }
 `;
 export const QUERY_ME = gql`
   {
