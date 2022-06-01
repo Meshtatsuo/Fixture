@@ -26,11 +26,13 @@ const resolvers = {
       throw new AuthenticationError("Not logged in");
     },
     me: async (parent, args, context) => {
+      console.log(context.user);
       if (context.user) {
-        const userData = await User.findOne({ _id: context.user._id })
+        
+        const userData = await User.findOne({ username: context.user.username })
           .select("-__v -password")
-          .populate("products");
-
+          // .populate("products");
+          
         return userData;
       }
 
