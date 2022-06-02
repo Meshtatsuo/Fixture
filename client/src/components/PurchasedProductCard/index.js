@@ -2,13 +2,34 @@ import React from "react";
 import { Link } from "react-router-dom";
 import axios from "axios";
 import { saveAs } from "file-saver";
+import { useQuery } from "@apollo/client";
+import { QUERY_PRODUCT } from "../../utils/queries";
 
 function PurchasedProductCard(item) {
-  //stuff
-  const { _id, title, description, price, thumbnailKey, createdAt, fileName } =
-    item;
-  const link = `/view/${_id}`;
-  const download = `/download/${_id}/${fileName}`;
+  const { id } = item;
+  console.log(id);
+  const { data } = useQuery(QUERY_PRODUCT, {
+    variables: { id: id },
+  });
+
+  let title;
+  let description;
+  let thumbKey;
+  let fileName;
+  let fileKey;
+  let price;
+
+  if (data) {
+    title = data.product.title;
+    description = data.product.description;
+    thumbKey = data.product.thumbnailKey;
+    fileName = data.product.fileName;
+    price = data.product.filePrice;
+    fileKey = data.product.fileKey;
+  }
+
+  const link = `/view/${id}`;
+  const download = `/download/${fileKey}/${fileName}`;
   async function downloadProduct() {
     const dl = await axios.post(download);
     if (!dl) {
@@ -24,7 +45,7 @@ function PurchasedProductCard(item) {
         <Link to={link}>
           <img
             className="w-full"
-            src={thumbnailKey}
+            src={thumbKey}
             alt="Sunset in the mountains"
           />
           <div className="px-6 py-4">
@@ -33,7 +54,10 @@ function PurchasedProductCard(item) {
           </div>
         </Link>
         <div className="grid grid-rows-2 justify-items-end px-6">
-          <button className="row-end-1 font-bold bg-blue-600 rounded-lg px-2 py-1">
+          <button
+            onClick={downloadProduct}
+            className="row-end-1 font-bold bg-blue-600 rounded-lg px-2 py-1"
+          >
             Download Files
           </button>
           <span className="font-bold row-end-2 mt-2">${price}</span>

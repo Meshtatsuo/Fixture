@@ -6,11 +6,12 @@
 
 Fixture is a premium online digital sales platform that allows you to take control of your e-commerce hustle. List products, track sales, share with creators. Sign up and see for yourself!
 
-Fixture is written in HTML, CSS, JavaScript, and JSX, utilizing Node.js, Express.js, and MongoDB for the backend server. The frontend is a React application. Packages used include Apollo Server Express, JSON Web Token for authentication and authorization, Mongoose for the database ODM, AWS SDK, bcrypt, GraphQL, and Stripe. The application is deployed to Heroku with MongDB Atlas for database services.
+Fixture is written in HTML, CSS, JavaScript, and JSX, utilizing Node.js, Express.js, and MongoDB for the backend server. The frontend is a React application. Packages used include Apollo Server Express, JSON Web Token for authentication and authorization, Mongoose for the database ODM, AWS SDK, bcrypt, GraphQL, and Stripe. The application is deployed to Heroku with MongoDB Atlas for database services.
 
 ![Screenshot of Fixture](client/src/assets/images/screenshot.gif)
 
 ## Table of Contents
+
 - [Link to Deployed Application](#link-to-deployed-application)
 - [User Story](#user-story)
 - [Installation](#installation)

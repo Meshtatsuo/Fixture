@@ -17,7 +17,7 @@ const Profile = () => {
     console.log(data);
     username = data?.me_all?.username;
     products = data?.me_all?.products;
-    purchases = data?.me_all?.purchases;
+    purchases = data?.me_all?.purchasedItems;
   }
 
   function logout() {
