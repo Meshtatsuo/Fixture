@@ -2,7 +2,7 @@
 
 # Environment variables
 .env
-
+!./client/.env
 # uploads from multer
 /uploads
 /server/uploads
