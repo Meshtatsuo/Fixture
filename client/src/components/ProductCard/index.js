@@ -2,6 +2,7 @@ import React from "react";
 import { Link } from "react-router-dom";
 import { useStoreContext } from "../../utils/GlobalState";
 import { ADD_TO_CART, UPDATE_CART_QUANTITY } from "../../utils/actions";
+import { idbPromise } from "../../utils/helpers";
 function ProductCard(item) {
   //stuff
   const { _id, title, description, price, thumbnailKey, createdAt } = item;
@@ -19,16 +20,21 @@ function ProductCard(item) {
         _id: _id,
         purchaseQuantity: parseInt(itemInCart.purchaseQuantity) + 1,
       });
+      idbPromise("cart", "put", {
+        ...itemInCart,
+        purchaseQuantity: parseInt(itemInCart.purchaseQuantity) + 1,
+      });
     } else {
       dispatch({
         type: ADD_TO_CART,
         product: { ...item, purchaseQuantity: 1 },
       });
+      idbPromise("cart", "put", { ...item, purchaseQuantity: 1 });
     }
   };
   return (
     <>
-      <div className="max-w-xs rounded overflow-hidden shadow-xl border-2 border-white hover:border-orange-100 m-2">
+      <div className="max-w-xs rounded overflow-hidden shadow-lg m-2">
         <Link to={link}>
           <img className="w-full" src={thumbnailKey} alt="product thumbnail" />
           <div className="px-6 py-4">

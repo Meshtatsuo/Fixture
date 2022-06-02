@@ -43,9 +43,7 @@ const Cart = () => {
 
   useEffect(() => {
     if (data) {
-      stripePromise.then((res) => {
-        res.redirectToCheckout({ sessionId: data.checkout.session });
-      });
+      window.location.replace(data.checkout.session);
     }
   }, [data]);
 
