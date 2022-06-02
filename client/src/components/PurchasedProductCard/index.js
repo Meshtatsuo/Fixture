@@ -16,7 +16,6 @@ function PurchasedProductCard(item) {
   let thumbKey;
   let fileName;
   let fileKey;
-  let price;
 
   if (data) {
     title = data.product.title;
