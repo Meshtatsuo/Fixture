@@ -2,6 +2,7 @@ import React from "react";
 import { useStoreContext } from "../../utils/GlobalState";
 import { ADD_TO_CART, UPDATE_CART_QUANTITY } from "../../utils/actions";
 import { Link } from "react-router-dom";
+import { idbPromise } from "../../utils/helpers";
 const SingleProduct = (item) => {
   //stuff
   const { _id, title, description, price, thumbnailKey, createdAt } = item;
@@ -19,10 +20,18 @@ const SingleProduct = (item) => {
         _id: _id,
         purchaseQuantity: parseInt(itemInCart.purchaseQuantity) + 1,
       });
+      idbPromise("cart", "put", {
+        ...itemInCart,
+        purchaseQuantity: parseInt(itemInCart.purchaseQuantity) + 1,
+      });
     } else {
       dispatch({
         type: ADD_TO_CART,
         product: { ...item, purchaseQuantity: 1 },
+      });
+      idbPromise("cart", "put", {
+        ...itemInCart,
+        purchaseQuantity: parseInt(itemInCart.purchaseQuantity) + 1,
       });
     }
   };

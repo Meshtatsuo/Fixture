@@ -25,7 +25,18 @@ function ProductList() {
   return (
     <div className="my-2">
       {data?.allProducts.length ? (
-        <div className="flex">
+        <div className="flex-1 grid grid-cols-1 gap-x-6 gap-y-10 lg:grid-cols-4">
+          {data.allProducts.map((product) => (
+            <ProductCard
+              key={product._id}
+              _id={product._id}
+              title={product.title}
+              description={product.description}
+              price={product.price}
+              thumbnailKey={product.thumbnailKey}
+              createdAt={product.createdAt}
+            />
+          ))}
           {data.allProducts.map((product) => (
             <ProductCard
               key={product._id}

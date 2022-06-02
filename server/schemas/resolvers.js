@@ -108,7 +108,7 @@ const resolvers = {
       console.log("Setup complete!");
       console.log(session);
       return {
-        session: session.id,
+        session: session.url,
       };
     },
     //not sure if this would actually show all products or only those tied to a user
