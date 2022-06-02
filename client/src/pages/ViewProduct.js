@@ -1,27 +1,28 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import SingleProduct from "../components/SingleProduct";
-
+import { useParams } from "react-router";
+import { useQuery } from "@apollo/client";
+import { QUERY_PRODUCT } from "../utils/queries";
 const ViewProduct = () => {
-  function addToCart() {
-    //add to cart function
-    //redirect to cart when item added!
+  const params = useParams();
+  const { data } = useQuery(QUERY_PRODUCT, {
+    variables: { id: params.id },
+  });
+  let product;
+  if (data) {
+    product = data.product;
   }
+
   return (
     <div className="container m-auto p-3 my-10">
-      <SingleProduct />
-      <div className="container m-auto lg:flex md:flex-wrap">
-        <div className="flex-1 p-12">
-          <p className="font-bold text-xl p-10 hover:bg-slate-100">
-            <Link to="/browse">Back to browse.</Link>
-          </p>
-        </div>
-        <div className="flex-1 p-12">
-          <p className="font-bold  text-right text-xl p-10 rounded  hover:bg-slate-100">
-            Add to cart
-          </p>
-        </div>
-      </div>
+      <SingleProduct
+        _id={product._id}
+        title={product.title}
+        description={product.description}
+        price={product.price}
+        thumbnailKey={product.thumbnailKey}
+      />
     </div>
   );
 };

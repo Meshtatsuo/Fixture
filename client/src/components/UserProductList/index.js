@@ -7,7 +7,7 @@ function UserProductList(props) {
   return (
     <div className="my-2">
       {data?.products?.length ? (
-        <div className="flex-row px-10">
+        <div className="flex px-10">
           {data.products.map((product) => (
             <ProductCard
               key={product._id}

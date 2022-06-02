@@ -10,11 +10,9 @@ import Auth from "../utils/auth";
 import { useStoreContext } from "../utils/GlobalState";
 
 const stripePromise = loadStripe(process.env.REACT_APP_STRIPE_KEY);
-
 const Cart = () => {
   const [state, dispatch] = useStoreContext();
   const [getCheckout, { data }] = useLazyQuery(QUERY_CHECKOUT);
-
   // calculate totals
   function calculateTotal() {
     let sum = 0;
@@ -24,16 +22,21 @@ const Cart = () => {
     return sum.toFixed(2);
   }
 
-  function submitCheckout() {
+  async function submitCheckout() {
+    console.log("Submitting");
     const productIds = [];
+    try {
+      state.cart.forEach((item) => {
+        for (let i = 0; i < item.purchaseQuantity; i++) {
+          productIds.push(item._id);
+        }
+      });
+    } catch (e) {
+      console.log(e);
+    }
+    console.log("Success");
 
-    state.cart.forEach((item) => {
-      for (let i = 0; i < item.purchaseQuantity; i++) {
-        productIds.push(item._id);
-      }
-    });
-
-    getCheckout({
+    await getCheckout({
       variables: { products: productIds },
     });
   }
@@ -68,9 +71,17 @@ const Cart = () => {
             <div className="flex-0 px-6 font-bold text-m">Quantity</div>
             <div className="flex-0 px-6 font-bold text-m">Price</div>
           </div>
-          <CartItem />
-          <CartItem />
-          <CartItem />
+          {state?.cart.length ? (
+            <div>
+              {state?.cart?.map((item) => (
+                <CartItem key={item._id} item={item} />
+              ))}
+            </div>
+          ) : (
+            <div className="flex-0 px6 font-bold text-m">
+              There's nothing here!
+            </div>
+          )}
         </div>
         <div className="flex flex-wrap">
           <p className="flex-1 w-full px-6 font-bold text-xl text-right">
