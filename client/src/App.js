@@ -17,6 +17,7 @@ import Profile from "./pages/Profile";
 import Signup from "./pages/Signup";
 import ViewProduct from "./pages/ViewProduct";
 import Features from "./pages/Features";
+import Success from "./pages/Success";
 
 // Import components
 import Nav from "./components/Nav";
@@ -61,10 +62,11 @@ function App() {
               <Route path="/signup" element={<Signup />} />
               <Route path="/browse" element={<Browse />} />
               <Route path="/features" element={<Features />} />
-              <Route path="new-product" element={<NewProduct />} />
-              <Route path="profile" element={<Profile />} />
-              <Route path="view/:id" element={<ViewProduct />} />
-              <Route path="cart" element={<Cart />} />
+              <Route path="/new-product" element={<NewProduct />} />
+              <Route path="/profile/:username" element={<Profile />} />
+              <Route path="/view/:id" element={<ViewProduct />} />
+              <Route path="/cart" element={<Cart />} />
+              <Route path="/success/:sessionId" element={<Success />} />
             </Routes>
           </StoreProvider>
         </div>

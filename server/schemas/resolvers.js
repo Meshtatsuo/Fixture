@@ -1,7 +1,7 @@
 const { AuthenticationError } = require("apollo-server-express");
-const { User, Product } = require("../models");
+const { User, Product, Order } = require("../models");
 const { signToken } = require("../utils/auth");
-const stripe = require("stripe")("sk_test_4eC39HqLyjWDarjtT1zdp7dc");
+const stripe = require("stripe")(process.env.STRIPE_KEY);
 
 // AWS functionality
 const { uploadFile, getFile, downloadFile } = require("../utils/s3.js");
@@ -27,14 +27,26 @@ const resolvers = {
     },
     me: async (parent, args, context) => {
       if (context.user) {
-        const userData = await User.findOne({ _id: context.user._id })
-          .select("-__v -password")
-          .populate("products");
+        const userData = await User.findOne({
+          username: context.user.username,
+        }).select("-__v -password");
+        // .populate("products");
 
         return userData;
       }
 
       throw new AuthenticationError("Not logged in");
+    },
+    me_all: async (parent, args, context) => {
+      if (context.user) {
+        console.log(context.user._id);
+        const userData = await User.findById(context.user._id)
+          .select("-__v -password")
+          .populate("purchasedItems")
+          .populate("products");
+
+        return userData;
+      }
     },
     users: async () => {
       return User.find().select("-__v -password").populate("products");
@@ -52,22 +64,25 @@ const resolvers = {
       throw new AuthenticationError("Not logged in");
     },
     checkout: async (parent, args, context) => {
-      const order = new Order({
+      const url = new URL(context.headers.referer).origin;
+      console.log(args);
+      let order;
+
+      order = new Order({
         products: args.products,
       });
-      const { products } = await order.populate("products");
 
+      let { products } = await order.populate("products");
       const line_items = [];
-      const url = new URL(context.headers.referer).origin;
+      console.log("Setting up product list");
 
       for (let i = 0; i < products.length; i++) {
         // generate product id
         const product = await stripe.products.create({
-          name: products[i].name,
+          name: products[i].title,
           description: products[i].description,
-          //add image here thumbnailKey: [`${url}/images/${products[i].image}`]
         });
-
+        console.log("setting up prices");
         // generate price id using the product id
         const price = await stripe.prices.create({
           product: product.id,
@@ -82,14 +97,16 @@ const resolvers = {
         });
       }
 
+      console.log("setting up session");
       const session = await stripe.checkout.sessions.create({
         payment_method_types: ["card"],
         line_items,
         mode: "payment",
-        success_url: `${url}/success?session_id={CHECKOUT_SESSION_ID}`,
+        success_url: `${url}/success/{CHECKOUT_SESSION_ID}`,
         cancel_url: `${url}/`,
       });
-
+      console.log("Setup complete!");
+      console.log(session);
       return {
         session: session.id,
       };
@@ -97,6 +114,9 @@ const resolvers = {
     //not sure if this would actually show all products or only those tied to a user
     products: async () => {
       return User.find().select("-__v -password").populate("products");
+    },
+    allProducts: async () => {
+      return Product.find().select("-__v");
     },
   },
   Mutation: {
@@ -110,17 +130,18 @@ const resolvers = {
       };
     },
     addOrder: async (parent, { products }, context) => {
-      console.log(context);
+      console.log(context.user);
       if (context.user) {
-        const order = new Order({
-          products,
+        const order = await Order.create({
+          products: products,
         });
+        console.log(order);
 
-        await User.findByIdAndUpdate(context.user._id, {
-          $push: {
-            orders: order,
-          },
-        });
+        const newUser = await User.findByIdAndUpdate(
+          context.user._id,
+          { $push: { purchasedItems: order } },
+          { new: true }
+        );
 
         return order;
       }
@@ -153,18 +174,19 @@ const resolvers = {
     },
     addProduct: async (parent, { product }, context) => {
       if (context.user) {
-        const product = await Product.create({
-          ...args,
+        const newProduct = await Product.create({
+          ...product,
           username: context.user.username,
         });
 
         await User.findByIdAndUpdate(
-          { _id: context.user._id },
-          { $push: { products: product } },
+          context.user._id,
+
+          { $push: { products: newProduct } },
           { new: true }
         );
 
-        return product;
+        return newProduct;
       }
 
       throw new AuthenticationError("You need to be logged in!");
