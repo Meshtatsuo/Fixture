@@ -29,9 +29,8 @@ function PurchasedProductCard(item) {
   }
 
   const link = `/view/${id}`;
-  const download = `/download/${fileKey}/${fileName}`;
   async function downloadProduct() {
-    const dl = await axios.post(download);
+    const dl = await axios.get(`/download/${fileKey}/${fileName}`);
     if (!dl) {
       console.log("Error");
       return;
