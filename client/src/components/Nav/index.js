@@ -8,7 +8,6 @@ function Nav() {
   const { data } = useQuery(QUERY_ME_BASIC);
   let username;
   let profileLink;
-  console.log(data);
   if (data) {
     username = data.me.username;
     username = username.toUpperCase();

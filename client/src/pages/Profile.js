@@ -1,5 +1,4 @@
 import React from "react";
-import Auth from "../utils/auth";
 import { Link } from "react-router-dom";
 import { QUERY_ME } from "../utils/queries";
 import { useQuery } from "@apollo/client";
@@ -14,14 +13,12 @@ const Profile = () => {
   let purchases;
 
   if (data) {
-    console.log(data);
     username = data?.me_all?.username;
     products = data?.me_all?.products;
     purchases = data?.me_all?.purchasedItems;
   }
 
   function logout() {
-    console.log("YAYA");
     auth.logout();
   }
 

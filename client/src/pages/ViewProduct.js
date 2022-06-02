@@ -1,5 +1,4 @@
 import React from "react";
-import { Link } from "react-router-dom";
 import SingleProduct from "../components/SingleProduct";
 import { useParams } from "react-router";
 import { useQuery } from "@apollo/client";

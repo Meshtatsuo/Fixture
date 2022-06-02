@@ -7,7 +7,6 @@ import { QUERY_PRODUCT } from "../../utils/queries";
 
 function PurchasedProductCard(item) {
   const { id } = item;
-  console.log(id);
   const { data } = useQuery(QUERY_PRODUCT, {
     variables: { id: id },
   });
@@ -24,7 +23,6 @@ function PurchasedProductCard(item) {
     description = data.product.description;
     thumbKey = data.product.thumbnailKey;
     fileName = data.product.fileName;
-    price = data.product.filePrice;
     fileKey = data.product.fileKey;
   }
 
@@ -32,7 +30,6 @@ function PurchasedProductCard(item) {
   async function downloadProduct() {
     const dl = await axios.get(`/download/${fileKey}/${fileName}`);
     if (!dl) {
-      console.log("Error");
       return;
     }
     saveAs(dl.data);
@@ -55,11 +52,10 @@ function PurchasedProductCard(item) {
         <div className="grid grid-rows-2 justify-items-end px-6">
           <button
             onClick={downloadProduct}
-            className="row-end-1 font-bold bg-blue-600 rounded-lg px-2 py-1"
+            className="row-end-1 font-bold bg-orange-200 rounded-lg px-2 py-1 mb-2"
           >
             Download Files
           </button>
-          <span className="font-bold row-end-2 mt-2">${price}</span>
         </div>
       </div>
     </>

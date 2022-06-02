@@ -16,7 +16,6 @@ const SignUpForm = () => {
 
   const handleFormSubmit = async (event) => {
     event.preventDefault();
-    console.log(formState);
     const mutationResponse = await addUser({
       variables: {
         username: formState.username,
@@ -30,7 +29,6 @@ const SignUpForm = () => {
 
   const handleChange = (event) => {
     const { name, value } = event.target;
-    console.log(name);
     setFormState({
       ...formState,
       [name]: value,

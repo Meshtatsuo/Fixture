@@ -6,7 +6,6 @@ import { idbPromise } from "../utils/helpers";
 import CartItem from "../components/CartItem";
 import Jumbo from "../assets/images/cart-jumbo.png";
 import { ADD_MULTIPLE_TO_CART } from "../utils/actions";
-import Auth from "../utils/auth";
 import { useStoreContext } from "../utils/GlobalState";
 
 const stripePromise = loadStripe(
@@ -25,7 +24,6 @@ const Cart = () => {
   }
 
   async function submitCheckout() {
-    console.log("Submitting");
     const productIds = [];
     try {
       state.cart.forEach((item) => {
@@ -36,7 +34,6 @@ const Cart = () => {
     } catch (e) {
       console.log(e);
     }
-    console.log("Success");
 
     await getCheckout({
       variables: { products: productIds },
