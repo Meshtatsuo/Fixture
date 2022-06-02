@@ -30,11 +30,7 @@ function ProductCard(item) {
     <>
       <div className="max-w-xs rounded overflow-hidden shadow-xl border-2 border-white hover:border-orange-100 m-2">
         <Link to={link}>
-          <img
-            className="w-full"
-            src={thumbnailKey}
-            alt="Sunset in the mountains"
-          />
+          <img className="w-full" src={thumbnailKey} alt="product thumbnail" />
           <div className="px-6 py-4">
             <div className="font-bold text-xl mb-2">{title}</div>
             <p className="text-grey-darker text-base">{description}</p>

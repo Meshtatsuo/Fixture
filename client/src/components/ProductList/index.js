@@ -25,7 +25,7 @@ function ProductList() {
   return (
     <div className="my-2">
       {data?.allProducts.length ? (
-        <div className="flex-row">
+        <div className="flex">
           {data.allProducts.map((product) => (
             <ProductCard
               key={product._id}

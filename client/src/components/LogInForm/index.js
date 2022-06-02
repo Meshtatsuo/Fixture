@@ -70,14 +70,14 @@ const LogInForm = () => {
                 <div className="row-1 ml-60">
                   <button
                     type="submit"
-                    className="bg-amber-50 px-4 p-2 rounded-lg font-bold"
+                    className="bg-amber-50 px-4 p-2  rounded-lg font-bold"
                   >
                     Log In
                   </button>
                 </div>
                 <div className="row-2 ml-10">
                   Don't have an account?
-                  <Link to="/signup">Sign Up!</Link>
+                  <Link to="/signup"> Sign Up!</Link>
                 </div>
               </div>
             </div>

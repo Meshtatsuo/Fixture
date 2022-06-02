@@ -179,7 +179,8 @@ const resolvers = {
         });
 
         await User.findByIdAndUpdate(
-          { username: context.user.username },
+          context.user._id,
+
           { $push: { products: newProduct } },
           { new: true }
         );

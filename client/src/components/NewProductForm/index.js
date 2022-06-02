@@ -4,8 +4,20 @@ import axios from "axios";
 import { saveAs } from "file-saver";
 
 import { ADD_PRODUCT } from "../../utils/mutations";
-
+import { useQuery } from "@apollo/client";
+import { QUERY_ME_BASIC } from "../../utils/queries";
 const NewProductForm = () => {
+  const { data } = useQuery(QUERY_ME_BASIC);
+  let username;
+  let profileLink;
+  console.log(data);
+  if (data) {
+    username = data.me.username;
+    username = username.toUpperCase();
+    profileLink = `/profile/${username}`;
+  } else {
+    profileLink = "/login";
+  }
   const [formState, setFormState] = useState({
     productTitle: "",
     productDescription: "",
@@ -106,9 +118,7 @@ const NewProductForm = () => {
       if (!response) {
         console.log("Error creating product");
       } else {
-        console.log(response);
-        const prodID = response.data.addProduct._id;
-        window.location.assign(`/view/${prodID}`);
+        window.location.assign(profileLink);
       }
     } catch (err) {
       console.log(err);
@@ -151,29 +161,8 @@ const NewProductForm = () => {
     }
   };
 
-  const downloadProduct = async (event) => {
-    console.log("time to download");
-    let key = "330e9c3ca30602cc4d465f7afe07acc9";
-    let fileName = "testFile.zip";
-
-    const url = await axios.get(
-      "/download/330e9c3ca30602cc4d465f7afe07acc9/test.zip",
-      {
-        responseType: "stream",
-      }
-    );
-
-    if (!url) {
-      console.log("An error has occurred");
-    } else {
-      console.log(url);
-      saveAs(url.data);
-    }
-  };
-
   return (
     <>
-      <button onClick={downloadProduct}>Download Product</button>
       <form onSubmit={handleFormSubmit}>
         <div id="productTitle" className="flex">
           <label
@@ -298,8 +287,6 @@ const NewProductForm = () => {
             <p className="font-bold"> Create Product </p>
           </button>
         </div>
-
-
       </form>
     </>
   );
