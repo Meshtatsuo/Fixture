@@ -1,22 +1,20 @@
 import React from "react";
-import ProductCard from "../ProductCard";
+import PurchasedProductCard from "../PurchasedProductCard";
 
 function UserPurchaseList(props) {
   const data = props;
+
+  console.log(data);
   return (
     <div className="my-2">
       {data?.purchases?.length ? (
         <div className="flex px-10">
-          {data.purchases.map((product) => (
-            <ProductCard
-              key={product._id}
-              _id={product._id}
-              title={product.title}
-              description={product.description}
-              price={product.price}
-              thumbnailKey={product.thumbnailKey}
-              createdAt={product.createdAt}
-            />
+          {data.purchases.map((purchase) => (
+            <>
+              {purchase.products.map((product) => (
+                <PurchasedProductCard id={product._id} />
+              ))}
+            </>
           ))}
         </div>
       ) : (

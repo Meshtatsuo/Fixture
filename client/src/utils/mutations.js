@@ -16,14 +16,8 @@ export const ADD_ORDER = gql`
     addOrder(products: $products) {
       purchaseDate
       products {
-        _id
         title
         description
-        price
-        thumbnailKey
-        fileKey
-        fileName
-        createdAt
       }
     }
   }
