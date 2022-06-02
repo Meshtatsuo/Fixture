@@ -8,7 +8,7 @@ function UserPurchaseList(props) {
   return (
     <div className="my-2">
       {data?.purchases?.length ? (
-        <div className="flex px-10">
+        <div className="flex-1 grid grid-cols-1 gap-x-6 gap-y-10 lg:grid-cols-4">
           {data.purchases.map((purchase) => (
             <>
               {purchase.products.map((product) => (
