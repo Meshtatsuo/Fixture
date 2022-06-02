@@ -5,12 +5,11 @@ import { ADD_TO_CART, UPDATE_CART_QUANTITY } from "../../utils/actions";
 import { idbPromise } from "../../utils/helpers";
 function ProductCard(item) {
   //stuff
-  const { _id, title, description, price, thumbnailKey, createdAt } = item;
+  const { _id, title, description, price, thumbnailKey } = item;
   const link = `/view/${_id}`;
   const [state, dispatch] = useStoreContext();
   const { cart } = state;
   const addToCart = () => {
-    console.log("Adding");
     // find the cart item with the matching id
     const itemInCart = cart.find((cartItem) => cartItem._id === _id);
     // if there was a match, call UPDATE with a new purchase quantity
@@ -45,7 +44,7 @@ function ProductCard(item) {
         <div className="grid grid-rows-2 justify-items-end px-6">
           <button
             onClick={addToCart}
-            className="row-end-1 font-bold bg-blue-600 rounded-lg px-2 py-1"
+            className="row-end-1 font-bold bg-orange-200 rounded-lg px-2 py-1"
           >
             Add To Cart
           </button>

@@ -2,13 +2,11 @@ import React from "react";
 import { useStoreContext } from "../../utils/GlobalState";
 import { idbPromise } from "../../utils/helpers";
 import { REMOVE_FROM_CART, UPDATE_CART_QUANTITY } from "../../utils/actions";
-import { isCompositeType } from "graphql";
 const CartItem = ({ item }) => {
-  const [state, dispatch] = useStoreContext();
+  const [dispatch] = useStoreContext();
 
   const onChange = (e) => {
     const value = e.target.value;
-    console.log(e.target.value);
     if (value === "0" || item.purchaseQuantity === 0) {
       dispatch({
         type: REMOVE_FROM_CART,

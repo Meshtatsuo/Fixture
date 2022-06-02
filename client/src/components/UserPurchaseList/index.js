@@ -4,7 +4,6 @@ import PurchasedProductCard from "../PurchasedProductCard";
 function UserPurchaseList(props) {
   const data = props;
 
-  console.log(data);
   return (
     <div className="my-2">
       {data?.purchases?.length ? (
