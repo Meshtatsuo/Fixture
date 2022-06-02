@@ -5,12 +5,10 @@ import { Link } from "react-router-dom";
 import { idbPromise } from "../../utils/helpers";
 const SingleProduct = (item) => {
   //stuff
-  const { _id, title, description, price, thumbnailKey, createdAt } = item;
-  const link = `/view/${_id}`;
+  const { _id, title, description, price, thumbnailKey } = item;
   const [state, dispatch] = useStoreContext();
   const { cart } = state;
   const addToCart = () => {
-    console.log("Adding");
     // find the cart item with the matching id
     const itemInCart = cart.find((cartItem) => cartItem._id === _id);
     // if there was a match, call UPDATE with a new purchase quantity

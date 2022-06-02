@@ -1,7 +1,6 @@
 import React, { useState } from "react";
 import { useMutation } from "@apollo/client";
 import axios from "axios";
-import { saveAs } from "file-saver";
 
 import { ADD_PRODUCT } from "../../utils/mutations";
 import { useQuery } from "@apollo/client";
@@ -10,7 +9,6 @@ const NewProductForm = () => {
   const { data } = useQuery(QUERY_ME_BASIC);
   let username;
   let profileLink;
-  console.log(data);
   if (data) {
     username = data.me.username;
     username = username.toUpperCase();
@@ -28,7 +26,7 @@ const NewProductForm = () => {
 
   const [errorMessage, setErrorMessage] = useState("");
 
-  const [create, { error }] = useMutation(ADD_PRODUCT);
+  const [create] = useMutation(ADD_PRODUCT);
 
   // handle form submission
   const handleFormSubmit = async (event) => {
@@ -41,7 +39,6 @@ const NewProductForm = () => {
     let fileKey = formState.productFile;
     const fileName = formState.productFile.name;
     let thumb = formState.productThumbnail;
-    console.log(price);
     if (!title || title === "") {
       setErrorMessage("Product title is required!");
       return;
@@ -91,14 +88,6 @@ const NewProductForm = () => {
     } catch (e) {
       console.log(e);
     }
-    const product = {
-      title: title,
-      description: description,
-      price: price,
-      thumbnailKey: thumb,
-      fileKey: fileKey,
-      fileName: fileName,
-    };
 
     // Now we can create our product
     try {
@@ -127,16 +116,11 @@ const NewProductForm = () => {
 
   // handle form change
   const handleChange = (event) => {
-    console.log(event.target.id);
     if (event.target.id === "product-upload") {
-      const { name } = event.target;
       const newVal = event.target.files[0];
-      console.log(newVal);
       formState.productFile = newVal;
     } else if (event.target.id === "thumbnail-upload") {
-      const { name } = event.target;
       const newVal = event.target.files[0];
-      console.log(newVal);
       formState.productThumbnail = newVal;
     } else if (event.target.id === "product-price") {
       // checks input for numerical values, and wipes
