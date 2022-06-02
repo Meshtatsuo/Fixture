@@ -9,7 +9,9 @@ import { ADD_MULTIPLE_TO_CART } from "../utils/actions";
 import Auth from "../utils/auth";
 import { useStoreContext } from "../utils/GlobalState";
 
-const stripePromise = loadStripe(process.env.REACT_APP_STRIPE_KEY);
+const stripePromise = loadStripe(
+  "pk_test_51JQBmiBhtB05wy5BtDubZqM2AooJIhviulM9gu25mesmkwhFRJ053lWTIEviSJUjoHe8qqjCgCyhFrrdaMQRHUvO00XOzQid2W"
+);
 const Cart = () => {
   const [state, dispatch] = useStoreContext();
   const [getCheckout, { data }] = useLazyQuery(QUERY_CHECKOUT);
